@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0 — investigation runbooks
+
+- Added runbooks: `cost-spike-investigation`, `latency-regression-drilldown`
+  (grounded in the exposed tools, with tool-gap notes), `drift-confirmation`
+  (partial until Feature E), `canary-go-no-go` (partial until Feature D).
+- `tao-overview` lists all runbooks; `docs/tool-manifest.md` documents the tool
+  gaps (deep cost/latency functions to expose) + feature dependencies.
+
 ## 0.1.0 — initial scaffold
 
 - Plugin shell mirroring `trillo-claude-plugin`: `.mcp.json` (Trillo AOS MCP,

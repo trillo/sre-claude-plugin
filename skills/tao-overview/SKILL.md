@@ -51,8 +51,12 @@ The platform ships **runbooks** as skills that encode how to investigate each
 class of problem. Pick the one that matches:
 
 - **`tao:reliability-incident-triage`** — an agent/fleet is failing.
-- *(more runbooks land here as they are added: cost-spike, latency-regression,
-  drift-confirmation, canary go/no-go.)*
+- **`tao:cost-spike-investigation`** — spend/tokens went up.
+- **`tao:latency-regression-drilldown`** — it got slow / a P95–P99 spike.
+- **`tao:drift-confirmation`** — an agent is "getting worse over time" *(partial
+  until Feature E ships)*.
+- **`tao:canary-go-no-go`** — should version B roll out wider? *(partial until
+  Feature D ships)*.
 
 Each runbook is a tool sequence ending in a drafted investigation report for the
 user to confirm and file.
