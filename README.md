@@ -1,2 +1,65 @@
-# tao-claude-plugin
-tao-claude-plugin
+# TAO — Trillo Agent Observability SRE Copilot (Claude Code plugin)
+
+Investigate a **Trillo Agent Observability (TAO)** deployment without leaving
+Claude Code. Install the plugin, sign in to your Trillo AOS account, and Claude
+becomes an **SRE investigation copilot**: "why did agent fleet X degrade at 2am?"
+becomes a conversation.
+
+TAO is a Trillo AOS application that discovers, monitors, governs, and optimizes a
+fleet of AI agents from their OpenTelemetry data. This plugin exposes TAO's
+**investigation tools** and ships the **runbooks** that teach Claude how to
+investigate the fleet.
+
+## What it does
+
+The plugin registers one MCP server (**`tao`**, on Trillo AOS) and ships
+investigation skills. From a Claude Code session you can:
+
+- **Triage incidents** — find findings, read a failure cluster's blast-radius /
+  spread, classify **code vs deployment vs dependency**, see impacted agents.
+- **Drill the evidence** — execution span skeletons, correlated logs, dependency
+  topology, baselines, location + executive health.
+- **File a report** — one write: `write_investigation_report`, which appears in the
+  TAO product UI alongside the platform's own agent analyses.
+
+It is **read-only against the fleet** (the single exception is the investigation
+report) and follows a **structure-not-payload** rule — tools return incident
+*shape* (findings, clusters, topology, span skeletons), never raw prompts or model
+outputs — so nothing sensitive leaves your boundary.
+
+The `tao:tao-overview` skill walks Claude through the flow; `docs/tool-manifest.md`
+lists the tools.
+
+## Relationship to the authoring plugin
+
+`trillo-claude-plugin` is for **authoring** Trillo AOS apps (Trillo AI / Designer,
+read-write). This plugin is for **investigating** a deployed TAO app (Trillo AOS
+runtime, read-only + report). Different audience, different tools; installed
+independently.
+
+## Prerequisites
+
+- A **Trillo AOS account** with access to the TAO deployment, and an RBAC role
+  (admin / auditor / user / owner) that scopes what you can see.
+- Claude Code (recent version with plugin support).
+
+## Install
+
+```bash
+claude plugin marketplace add trillo/tao-claude-plugin
+claude plugin install tao
+```
+
+Then authenticate: `/mcp` → **tao** → authenticate.
+
+## Configuration
+
+- `TAO_MCP_URL` — override the Trillo AOS MCP endpoint (defaults to the hosted
+  URL in `.mcp.json`).
+
+## Status
+
+Early scaffold (v0.1.0). Tool manifest and the first runbook
+(`reliability-incident-triage`) are drafted against the real TAO app surface;
+more runbooks (cost-spike, latency-regression, drift-confirmation, canary
+go/no-go) to follow.

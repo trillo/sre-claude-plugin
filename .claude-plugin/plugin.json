@@ -1,0 +1,12 @@
+{
+  "name": "tao",
+  "version": "0.1.0",
+  "description": "Investigate a Trillo Agent Observability (TAO) deployment from Claude Code: OAuth login to Trillo AOS, then triage reliability/latency/cost/governance incidents with the platform's investigation tools and runbooks, and file an investigation report back into the TAO UI.",
+  "author": {
+    "name": "Trillo Inc",
+    "url": "https://trillo.io"
+  },
+  "homepage": "https://trillo.io",
+  "license": "UNLICENSED",
+  "keywords": ["trillo", "tao", "observability", "sre", "mcp", "oauth", "incident"]
+}

@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "tao": {
+      "type": "http",
+      "url": "${TAO_MCP_URL:-https://aos.trillo.ai/api/v2.0/mcp}",
+      "oauth": {
+        "clientId": "tao-claude-code",
+        "callbackPort": 8090
+      }
+    }
+  }
+}
