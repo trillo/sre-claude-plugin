@@ -27,8 +27,17 @@ report) and follows a **structure-not-payload** rule — tools return incident
 *shape* (findings, clusters, topology, span skeletons), never raw prompts or model
 outputs — so nothing sensitive leaves your boundary.
 
-The `tao:tao-overview` skill walks Claude through the flow; see
-`docs/user-guide.md` for the full walkthrough.
+The `tao:tao-overview` skill walks Claude through the flow; see the
+**[User Guide](docs/user-guide.md)** for the full walkthrough.
+
+## Documentation
+
+- **[User Guide](docs/user-guide.md)** — install & authenticate, a worked first
+  investigation, the runbook catalog, reading the report, and troubleshooting
+  (plus an admin appendix for enabling the plugin).
+- **Runbooks** — the investigation skills under [`skills/`](skills/):
+  `reliability-incident-triage`, `cost-spike-investigation`,
+  `latency-regression-drilldown`, `drift-confirmation`, `canary-go-no-go`.
 
 ## Relationship to the authoring plugin
 
@@ -59,7 +68,7 @@ Then authenticate: `/mcp` → **tao** → authenticate.
 
 ## Status
 
-Early scaffold (v0.1.0). Tool manifest and the first runbook
-(`reliability-incident-triage`) are drafted against the real TAO app surface;
-more runbooks (cost-spike, latency-regression, drift-confirmation, canary
-go/no-go) to follow.
+v0.3.0. The tool surface and all six skills (`tao-overview` + five runbooks) are
+drafted against the real TAO app surface. Two runbooks (`drift-confirmation`,
+`canary-go-no-go`) run a partial flow until their platform features ship; the
+report write-path lights up once the TAO app implements it.
