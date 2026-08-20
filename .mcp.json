@@ -1,10 +1,10 @@
 {
   "mcpServers": {
-    "tao": {
+    "sre": {
       "type": "http",
-      "url": "${TAO_MCP_URL:-https://aos.trillo.ai/api/v2.0/mcp}",
+      "url": "${SRE_MCP_URL:-https://aos.trillo.ai/api/v2.0/mcp}",
       "oauth": {
-        "clientId": "tao-claude-code",
+        "clientId": "sre-claude-code",
         "callbackPort": 8090
       }
     }

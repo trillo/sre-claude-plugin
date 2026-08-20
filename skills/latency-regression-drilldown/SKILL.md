@@ -1,12 +1,12 @@
 ---
-description: Runbook for investigating a latency regression or slowness in a Trillo Agent Observability deployment. Walks from "it got slow" to the bottleneck component (model / tool / retrieval / orchestration) and whether it's a regression vs. baseline. Use when the user reports high latency, a P95/P99 spike, or a slow agent.
+description: Runbook for investigating a latency regression or slowness in a Trillo Observability deployment. Walks from "it got slow" to the bottleneck component (model / tool / retrieval / orchestration) and whether it's a regression vs. baseline. Use when the user reports high latency, a P95/P99 spike, or a slow agent.
 ---
 
 # Runbook: latency-regression drill-down
 
 Goal: locate the **latency bottleneck** and decide whether it's a **regression**
 (a step change vs. baseline) or steady-state, then file a report. Reason from
-**structure, not payload** (see `tao:tao-overview`).
+**structure, not payload** (see `sre:sre-overview`).
 
 ## Step 1 — Find the latency finding
 

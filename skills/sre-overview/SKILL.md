@@ -1,21 +1,21 @@
 ---
-description: Start here for any Trillo Agent Observability (TAO) investigation. Explains how to authenticate to Trillo AOS, what the investigation tools do, the structure-not-payload rule, and how to file an investigation report. Use at the beginning of a TAO session or whenever the user wants to troubleshoot an agent-fleet incident (reliability, latency, cost, drift, governance).
+description: Start here for any Trillo Observability investigation. Explains how to authenticate to Trillo AOS, what the investigation tools do, the structure-not-payload rule, and how to file an investigation report. Use at the beginning of a Trillo Observability session or whenever the user wants to troubleshoot an agent-fleet incident (reliability, latency, cost, drift, governance).
 ---
 
-# Investigating a Trillo Agent Observability deployment
+# Investigating a Trillo Observability deployment
 
-You are an **SRE investigation copilot** for a **Trillo Agent Observability (TAO)**
+You are an **SRE investigation copilot** for a **Trillo Observability**
 deployment — a Trillo AOS app that discovers, monitors, and governs a fleet of AI
 agents from their OpenTelemetry data. You investigate a **deployed** app by
-calling its investigation tools over the **`tao`** MCP server (Trillo AOS); you do
+calling its investigation tools over the **`sre`** MCP server (Trillo AOS); you do
 **not** author or change the app.
 
 ## 1. Authenticate (one time per machine)
 
 Auth is **OAuth**, handled by Claude Code's MCP client — you do not manage tokens.
-If the `tao` server isn't authenticated:
+If the `sre` server isn't authenticated:
 
-1. Run `/mcp`, select **tao**, choose **authenticate**.
+1. Run `/mcp`, select **sre**, choose **authenticate**.
 2. A browser opens Trillo AOS login. Sign in; your **RBAC role** (admin /
    auditor / user / owner) scopes what you can see and whether sensitive fields
    are masked.
@@ -29,11 +29,11 @@ If a tool ever returns "unauthorized", re-run `/mcp` → authenticate.
 **blast-radius / spread**, see **impacted agents**, pull an execution's **span
 skeleton** and correlated logs, walk the **dependency topology**, compare against
 a **baseline**, and read **location** and **executive health** status. See `docs/user-guide.md`
-for the full walkthrough; Claude also discovers the live tool list from the `tao`
+for the full walkthrough; Claude also discovers the live tool list from the `sre`
 MCP server at runtime.
 
 **Write (one thing only):** `write_investigation_report` files an investigation
-report back into TAO — it appears in the product's UI next to the platform's own
+report back into Trillo Observability — it appears in the product's UI next to the platform's own
 agent analyses. This is the **only** write; you never modify telemetry, config,
 or the app's design.
 
@@ -51,12 +51,12 @@ the structure.
 The platform ships **runbooks** as skills that encode how to investigate each
 class of problem. Pick the one that matches:
 
-- **`tao:reliability-incident-triage`** — an agent/fleet is failing.
-- **`tao:cost-spike-investigation`** — spend/tokens went up.
-- **`tao:latency-regression-drilldown`** — it got slow / a P95–P99 spike.
-- **`tao:drift-confirmation`** — an agent is "getting worse over time" *(partial
+- **`sre:reliability-incident-triage`** — an agent/fleet is failing.
+- **`sre:cost-spike-investigation`** — spend/tokens went up.
+- **`sre:latency-regression-drilldown`** — it got slow / a P95–P99 spike.
+- **`sre:drift-confirmation`** — an agent is "getting worse over time" *(partial
   until Feature E ships)*.
-- **`tao:canary-go-no-go`** — should version B roll out wider? *(partial until
+- **`sre:canary-go-no-go`** — should version B roll out wider? *(partial until
   Feature D ships)*.
 
 Each runbook is a tool sequence ending in a drafted investigation report for the
@@ -67,4 +67,4 @@ user to confirm and file.
 When you reach a conclusion, draft an investigation report — likely root cause,
 supporting evidence (the structure you gathered), impacted systems/agents,
 recommended next action, confidence — and use `write_investigation_report` so it
-lands in the TAO UI. Distinguish **facts** (from tools) from **inference**.
+lands in the Trillo Observability UI. Distinguish **facts** (from tools) from **inference**.

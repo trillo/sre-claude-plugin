@@ -1,5 +1,5 @@
 ---
-description: Runbook for a canary rollout go/no-go decision in a Trillo Agent Observability deployment — a new agent version (B) is running on some locations; decide whether to roll it out wider by comparing it to the current version (A) on normalized reliability, latency, cost, tokens, and quality. Use when the user asks "should we roll out version B" or "is the canary safe to expand".
+description: Runbook for a canary rollout go/no-go decision in a Trillo Observability deployment — a new agent version (B) is running on some locations; decide whether to roll it out wider by comparing it to the current version (A) on normalized reliability, latency, cost, tokens, and quality. Use when the user asks "should we roll out version B" or "is the canary safe to expand".
 ---
 
 # Runbook: canary go / no-go
@@ -7,7 +7,7 @@ description: Runbook for a canary rollout go/no-go decision in a Trillo Agent Ob
 Goal: decide **roll-out / hold / roll-back** for a new agent version (B) by
 comparing it to the incumbent (A) over a short window on **normalized** metrics,
 then file the decision. Reason from **structure, not payload** (see
-`tao:tao-overview`).
+`sre:sre-overview`).
 
 > **Feature dependency (read first):** version A/B comparison is **Feature D**
 > (Agent A/B / Version Comparison), not yet built — there is no `compare_versions`

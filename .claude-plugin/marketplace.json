@@ -1,14 +1,14 @@
 {
-  "name": "tao",
+  "name": "sre",
   "owner": {
     "name": "Trillo Inc",
     "url": "https://trillo.io"
   },
   "plugins": [
     {
-      "name": "tao",
+      "name": "sre",
       "source": "./",
-      "description": "SRE investigation copilot for Trillo Agent Observability over the Trillo AOS MCP server (OAuth login).",
+      "description": "SRE investigation copilot for Trillo Observability over the Trillo AOS MCP server (OAuth login).",
       "version": "0.1.0"
     }
   ]

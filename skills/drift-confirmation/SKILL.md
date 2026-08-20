@@ -1,12 +1,12 @@
 ---
-description: Runbook for confirming behavioral drift in a Trillo Agent Observability deployment — a slow-moving degradation over time (rising hallucination/eval-fail rate, latency creep, declining quality) that no single trace makes obvious. Use when the user suspects an agent is "getting worse over time" or a model silently changed.
+description: Runbook for confirming behavioral drift in a Trillo Observability deployment — a slow-moving degradation over time (rising hallucination/eval-fail rate, latency creep, declining quality) that no single trace makes obvious. Use when the user suspects an agent is "getting worse over time" or a model silently changed.
 ---
 
 # Runbook: drift confirmation
 
 Goal: confirm (or rule out) **gradual drift** in an agent's behavior over time and
 attribute it — a silent **provider** model update vs. **input/data** shift — then
-file a report. Reason from **structure, not payload** (see `tao:tao-overview`).
+file a report. Reason from **structure, not payload** (see `sre:sre-overview`).
 
 > **Feature dependency (read first):** full drift detection is **Feature E**
 > (Behavioral Drift Detection), not yet built — there is no `get_drift` tool yet.

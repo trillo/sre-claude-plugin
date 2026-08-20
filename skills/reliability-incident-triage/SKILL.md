@@ -1,12 +1,12 @@
 ---
-description: Runbook for triaging a reliability incident in a Trillo Agent Observability deployment — an agent or agent fleet is failing. Walks from "something is failing" to a root-cause class (code vs deployment vs dependency), impacted systems, and a drafted investigation report. Use when the user reports errors, a degraded agent, a failure spike, or asks "why did fleet X degrade".
+description: Runbook for triaging a reliability incident in a Trillo Observability deployment — an agent or agent fleet is failing. Walks from "something is failing" to a root-cause class (code vs deployment vs dependency), impacted systems, and a drafted investigation report. Use when the user reports errors, a degraded agent, a failure spike, or asks "why did fleet X degrade".
 ---
 
 # Runbook: reliability incident triage
 
 Goal: turn "an agent is failing" into a **defensible root cause + blast radius +
 recommended action**, then file a report. Reason from **structure, not payload**
-(see `tao:tao-overview`). Prefer parallel tool calls where steps are independent.
+(see `sre:sre-overview`). Prefer parallel tool calls where steps are independent.
 
 ## Step 1 — Find the incident
 
@@ -52,7 +52,7 @@ recommended action**, then file a report. Reason from **structure, not payload**
    baseline delta), **impacted systems/agents**, **recommended next action**, and
    a **confidence** level. Separate facts (from tools) from inference.
 10. Draft it and call `write_investigation_report` (target `AiAnalysis`,
-    `analysisType = external_sre_copilot`) so it appears in the TAO UI. Reference
+    `analysisType = external_sre_copilot`) so it appears in the Trillo Observability UI. Reference
     the `findingId` in the evidence. Confirm with the user before filing.
 
 ## Notes

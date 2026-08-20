@@ -1,12 +1,12 @@
 ---
-description: Runbook for investigating a cost or token spike in a Trillo Agent Observability deployment. Walks from "spend went up" to the application/agent/model driving it and a drafted report. Use when the user reports rising cost, a budget alert, a token spike, or asks "why did our AI spend jump".
+description: Runbook for investigating a cost or token spike in a Trillo Observability deployment. Walks from "spend went up" to the application/agent/model driving it and a drafted report. Use when the user reports rising cost, a budget alert, a token spike, or asks "why did our AI spend jump".
 ---
 
 # Runbook: cost-spike investigation
 
 Goal: attribute a spend increase to the **application / agent / model / location**
 driving it, and file a report. Reason from **structure, not payload** (see
-`tao:tao-overview`).
+`sre:sre-overview`).
 
 ## Step 1 — Find the cost finding
 
