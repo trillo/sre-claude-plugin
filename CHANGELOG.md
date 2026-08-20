@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.3.0 — user guide; internal docs relocated
+
+- Added `docs/user-guide.md` — the human-facing SRE guide (what it is, install +
+  auth, a worked first investigation, the runbook catalog, reading the report,
+  troubleshooting, and an admin appendix).
+- Moved the internal design docs out of this public repo into
+  **trillo-observability**: the tool manifest (tool→function mapping, allow-list,
+  tool gaps) and the app-team investigation-report write-path handoff. README and
+  the `tao-overview` skill now point at the user guide; Claude discovers the live
+  tool list from the MCP server at runtime.
+
 ## 0.2.0 — investigation runbooks
 
 - Added runbooks: `cost-spike-investigation`, `latency-regression-drilldown`

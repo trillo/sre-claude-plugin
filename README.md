@@ -27,8 +27,8 @@ report) and follows a **structure-not-payload** rule — tools return incident
 *shape* (findings, clusters, topology, span skeletons), never raw prompts or model
 outputs — so nothing sensitive leaves your boundary.
 
-The `tao:tao-overview` skill walks Claude through the flow; `docs/tool-manifest.md`
-lists the tools.
+The `tao:tao-overview` skill walks Claude through the flow; see
+`docs/user-guide.md` for the full walkthrough.
 
 ## Relationship to the authoring plugin
 

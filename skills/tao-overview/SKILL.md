@@ -28,8 +28,9 @@ If a tool ever returns "unauthorized", re-run `/mcp` → authenticate.
 **Read (investigate):** find and rank findings, read a failure cluster's
 **blast-radius / spread**, see **impacted agents**, pull an execution's **span
 skeleton** and correlated logs, walk the **dependency topology**, compare against
-a **baseline**, and read **location** and **executive health** status. See
-`docs/tool-manifest.md` for the exact tools.
+a **baseline**, and read **location** and **executive health** status. See `docs/user-guide.md`
+for the full walkthrough; Claude also discovers the live tool list from the `tao`
+MCP server at runtime.
 
 **Write (one thing only):** `write_investigation_report` files an investigation
 report back into TAO — it appears in the product's UI next to the platform's own
