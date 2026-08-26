@@ -85,7 +85,7 @@ Claude will (roughly):
    on, impacted systems/agents, a recommended next action, and a confidence level.
 
 You review the draft; when you say go, Claude files it into Trillo Observability with
-`write_investigation_report`, and it appears in the product UI.
+`writeInvestigationReport`, and it appears in the product UI.
 
 **Tip:** give it the specifics you already know — agent name, time window, region,
 symptom. It narrows the search and improves the report.

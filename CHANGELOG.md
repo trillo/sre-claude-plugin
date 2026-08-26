@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.5.0 — align tool naming with live server functions (SRE-07)
+
+- Updated all 35 tool call sites across the 6 skill files to use the live server
+  `camelCase` function names (`getTopPlatformFindings`, `getFailureClusterStatistics`,
+  `getImpactedAgentFindings`, `getExecutionDetails`, `getCorrelatedLogsAndEvents`,
+  `getDependencyTopology`, `getAgentDependencyTree`, `getAgentPerformanceBaseline`,
+  `getExecutiveHealthSummary`, `compareAgentVersions`, `writeInvestigationReport`).
+- Added preflight verification check to `sre-overview`: verifies `list_functions`
+  and prohibits fallback to generic data CRUD tools (`data_*`).
+- Corrected drift confirmation runbook flow (SRE-13) to read findings via
+  `getTopPlatformFindings(findingType='drift')` and `getImpactedAgentFindings`
+  instead of calling the mutation sweeper.
+
 ## 0.4.0 — rename to the SRE plugin
 
 - Renamed the plugin from `tao` to **`sre`** (audience-accurate: SRE / on-call

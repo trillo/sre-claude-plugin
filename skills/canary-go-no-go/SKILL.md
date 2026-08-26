@@ -10,9 +10,9 @@ then file the decision. Reason from **structure, not payload** (see
 `sre:sre-overview`).
 
 > **Feature dependency (read first):** version A/B comparison is **Feature D**
-> (Agent A/B / Version Comparison), not yet built — there is no `compare_versions`
-> tool yet. Until it ships, run the **partial** flow below (per-version baselines).
-> When Feature D lands, this becomes a single `compare_versions` call + verdict.
+> (Agent A/B / Version Comparison) — backing function `compareAgentVersions`.
+> Until it is exposed as an agent tool, run the **partial** flow below (per-version baselines).
+> When Feature D lands, this becomes a single `compareAgentVersions` call + verdict.
 
 ## The principle (applies either way)
 
@@ -25,19 +25,19 @@ B on a few locations takes far less traffic than A, so totals lie. Always read t
 
 1. Identify the two versions (A = current, B = canary) and the window (e.g. last
    24h). Confirm B's execution/location count is enough to be meaningful.
-2. For each version, `get_agent_baseline(agentId, metric = error_rate | latency)`
-   and read any per-version `get_top_findings` (reliability/cost/latency) — did B
+2. For each version, `getAgentPerformanceBaseline(agentId, metric = error_rate | latency)`
+   and read any per-version `getTopPlatformFindings` (reliability/cost/latency) — did B
    introduce a **new failure signature** vs A?
 3. Compare the **normalized** values you can get (error rate, latency). Flag that
    **cost/exec, tokens/exec, and composite quality** need Feature D for a proper
    side-by-side; state this limitation.
-4. Draft `write_investigation_report` with a **provisional** verdict
+4. Draft `writeInvestigationReport` with a **provisional** verdict
    (roll-out / hold / roll-back) + the caveat that full normalized + quality
    comparison awaits Feature D. Low confidence if B's sample is thin.
 
 ## Full flow (when Feature D ships)
 
-1. `compare_versions(agentId, versionA, versionB, window)` → normalized error
+1. `compareAgentVersions(agentId, versionA, versionB, window)` → normalized error
    rate, P95, cost/exec, tokens/exec, and **composite quality** (with per-eval
    breakdown), plus per-version traffic + location counts and a materiality-based
    **rollout verdict** ("B 22% cheaper at equal quality → candidate to roll out").

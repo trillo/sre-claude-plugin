@@ -19,7 +19,7 @@ investigation skills. From a Claude Code session you can:
   spread, classify **code vs deployment vs dependency**, see impacted agents.
 - **Drill the evidence** — execution span skeletons, correlated logs, dependency
   topology, baselines, location + executive health.
-- **File a report** — one write: `write_investigation_report`, which appears in the
+- **File a report** — one write: `writeInvestigationReport`, which appears in the
   Trillo Observability product UI alongside the platform's own agent analyses.
 
 It is **read-only against the fleet** (the single exception is the investigation
@@ -68,7 +68,7 @@ Then authenticate: `/mcp` → **sre** → authenticate.
 
 ## Status
 
-v0.3.0. The tool surface and all six skills (`sre-overview` + five runbooks) are
-drafted against the real Trillo Observability app surface. Two runbooks (`drift-confirmation`,
+v0.5.0. The tool surface and all six skills (`sre-overview` + five runbooks) are
+aligned directly with the live Trillo Observability server functions (`camelCase`). Two runbooks (`drift-confirmation`,
 `canary-go-no-go`) run a partial flow until their platform features ship; the
 report write-path lights up once the Trillo Observability app implements it.
