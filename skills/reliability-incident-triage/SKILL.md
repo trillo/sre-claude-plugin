@@ -52,7 +52,7 @@ recommended action**, then file a report. Reason from **structure, not payload**
    baseline delta), **impacted systems/agents**, **recommended next action**, and
    a **confidence** level. Separate facts (from tools) from inference.
 10. Draft it and call `writeInvestigationReport` (target `AiAnalysis`,
-    `analysisType = external_sre_copilot`) so it appears in the Trillo Observability UI. Reference
+    `analysisType = investigation`) so it appears in the Trillo Observability UI. Reference
     the `findingId` in the evidence. Confirm with the user before filing.
 
 ## Notes
