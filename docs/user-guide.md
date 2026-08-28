@@ -101,11 +101,9 @@ Each runbook is a guided investigation. You can invoke one explicitly (e.g.
 | **cost-spike-investigation** | spend or token usage jumped | works (deeper cost drill needs an admin to expose extra tools — §8) |
 | **latency-regression-drilldown** | it got slow / a P95–P99 spike | works (deeper latency breakdown needs an admin to expose extra tools — §8) |
 | **drift-confirmation** | an agent seems to be "getting worse over time" | partial until the Drift feature ships |
-| **canary-go-no-go** | should version B roll out wider? | partial until the A/B Comparison feature ships |
+| **canary-go-no-go** | should version B roll out wider? | full (powered by `compareAgentVersions`) |
 
-"Partial" runbooks still help today (they compare against baselines); they'll
-become one-step calls when the corresponding platform feature lands. Claude will
-tell you in-session when it's running a partial flow and why.
+Runbooks with full support execute complete side-by-side investigations with a single command. Partial runbooks (such as drift confirmation) compare against historical baselines until dedicated drift analytics land.
 
 Start any session with the **sre-overview** guide if you want Claude to orient
 itself first.
@@ -122,8 +120,9 @@ author, so the team can see where it came from.
 ## 8. Troubleshooting
 
 - **"unauthorized"** → `/mcp` → **sre** → authenticate again.
-- **"that tool isn't available"** for a cost/latency deep-dive, drift, or A/B
-  comparison → the underlying platform function isn't exposed to the copilot yet.
+- **`invalid_client` or OAuth login fails** → Confirm `SRE_MCP_URL` points to the intended server (`echo $SRE_MCP_URL`). Ensure `sre-claude-code` and the `Agent_Observability` app are deployed on that server.
+- **"No tools available" / empty `list_functions`** → Confirm the target environment has exposed the curated investigation tools to your client profile.
+- **"that tool isn't available"** for a cost/latency deep-dive or drift → the underlying platform function isn't exposed to the copilot yet.
   That's an **admin/app-team** step (see the appendix); the runbook will fall back
   to what it can do and say so.
 - **Empty or thin results** → widen the time window, or double-check the agent /

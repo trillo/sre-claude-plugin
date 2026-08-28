@@ -62,8 +62,7 @@ class of problem. Pick the one that matches:
 - **`sre:latency-regression-drilldown`** — it got slow / a P95–P99 spike.
 - **`sre:drift-confirmation`** — an agent is "getting worse over time" *(partial
   until Feature E ships)*.
-- **`sre:canary-go-no-go`** — should version B roll out wider? *(partial until
-  Feature D ships)*.
+- **`sre:canary-go-no-go`** — should version B roll out wider? *(full; powered by `compareAgentVersions`)*.
 
 Each runbook is a tool sequence ending in a drafted investigation report for the
 user to confirm and file.
