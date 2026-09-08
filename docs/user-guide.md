@@ -30,8 +30,10 @@ time — and you'd rather stay in your terminal than context-switch to the conso
 - **Structure, not payload.** The tools return the *shape* of an incident —
   which agent / tool / dependency / version / location / time failed, with counts
   and rates — **not** raw prompts or model outputs. Troubleshooting rarely needs
-  the prompt text, and this keeps sensitive content inside your boundary. Your
-  RBAC role also scopes what you can see and masks sensitive fields.
+  the prompt text, and this keeps sensitive content inside your boundary. The
+  copilot enforces strict client-side sanitization to disregard and redact any
+  prompt/completion text, while backend egress filtering strips payload attributes
+  before transmission. Your RBAC role also scopes what you can see and masks sensitive fields.
 
 ## 3. Prerequisites
 

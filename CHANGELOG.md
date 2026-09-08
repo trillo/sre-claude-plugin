@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.5.1 — client-side structure-not-payload guardrails (SRE-04)
+
+- Strengthened `sre-overview` with explicit client-side ingestion sanitization:
+  Claude Code must strictly disregard, redact, and never quote or propagate raw
+  prompts (`gen_ai.prompt`), completions (`gen_ai.completion`), input texts
+  (`inputPreview`, `attributes.input`), or raw output text (`outputPreview`)
+  when inspecting `getExecutionDetails` or other telemetry responses.
+- Updated `reliability-incident-triage`, `latency-regression-drilldown`, and
+  `drift-confirmation` runbook skills to mandate structure-only extraction (categories,
+  durations, HTTP codes, error messages, and dependency targets).
+- Updated `docs/user-guide.md` with the dual-layer egress defense model.
+
 ## 0.5.0 — align tool naming with live server functions (SRE-07)
 
 - Updated all 35 tool call sites across the 6 skill files to use the live server

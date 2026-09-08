@@ -37,7 +37,7 @@ file a report. Reason from **structure, not payload** (see `sre:sre-overview`).
 2. Open the drift detail: recent-vs-baseline distribution/trend; provider-vs-input
    attribution.
 3. `getAgentPerformanceBaseline` to corroborate; representative executions across the
-   window for evidence via `getExecutionDetails`.
+   window for evidence via `getExecutionDetails` (structure-only: timing, token usage, status; ignore prompt/completion payloads).
 4. File the report referencing the DRIFT `findingId` using `writeInvestigationReport`.
 
 See `trillo-observability` Scheduled Feature Specs (Feature E) for the design.

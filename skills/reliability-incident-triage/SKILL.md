@@ -34,6 +34,7 @@ recommended action**, then file a report. Reason from **structure, not payload**
 5. From the finding/cluster, take a representative execution and call
    `getExecutionDetails(executionId)` → the **span skeleton**; identify the **first
    failing span** (category + status).
+   - **Structure only:** Extract only structural properties: span category, status, HTTP status code, duration, and error message. Strictly disregard and never quote any prompt/completion/preview strings (`inputPreview`, `outputPreview`, `gen_ai.prompt`, `gen_ai.completion`).
 6. `getCorrelatedLogsAndEvents(traceId|executionId)` → correlated logs/events for that
    failure (error signatures, retries, timeouts).
 7. `getDependencyTopology` (or `getAgentDependencyTree(agentId)`) → confirm

@@ -27,6 +27,7 @@ Goal: locate the **latency bottleneck** and decide whether it's a **regression**
    **span skeleton**; identify which span **category** dominates the duration:
    `MODEL` (LLM call), `TOOL` (external call), `RETRIEVAL` (vector store), or
    orchestration/other.
+   - **Structure only:** Derive duration per category from span timings; do not echo or inspect raw prompts or model completions.
 5. If a **TOOL/RETRIEVAL** span dominates → `getDependencyTopology` /
    `getAgentDependencyTree(agentId)` to name the slow tool → external system
    and see who else depends on it (shared-dependency blast radius).

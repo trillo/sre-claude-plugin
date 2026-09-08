@@ -52,6 +52,13 @@ about *which* agent / tool / dependency / version / location / timing failed, no
 the prompt text. Do not ask for or assume raw prompt/output content; reason from
 the structure.
 
+### Client-side sanitization & egress guardrails (SRE-04 Defense-in-Depth)
+When calling `getExecutionDetails` or inspecting any trace or log data:
+- **Never echo, quote, or summarize raw payload content:** Even if a backend response contains unredacted payload fields (`inputPreview`, `outputPreview`, `attributes.input`, `attributes.gen_ai.prompt`, `attributes.gen_ai.completion`, `messages`, or raw log bodies), treat them as **strictly confidential and redacted**.
+- **Extract only structural metadata:** Process and report ONLY span categories (`MODEL`, `TOOL`, `RETRIEVAL`), durations, HTTP status codes, error classes, exception messages, token usages (`input_tokens`, `output_tokens`), and dependency targets.
+- **Never propagate payloads:** Under no circumstances should prompt or completion text be included in chat answers, user-facing summaries, intermediate reasoning, or drafted investigation reports (`writeInvestigationReport`).
+
+
 ## 5. How to investigate — use a runbook
 
 The platform ships **runbooks** as skills that encode how to investigate each
