@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.5.2 — client-side authorization & read-only boundaries (SRE-15 / SRE-03)
+
+- Added explicit operational boundaries to `sre-overview`: SRE Copilot operates
+  strictly read-only and is prohibited from calling administrative mutation tools
+  (`updateGovernancePolicyAction`, `setAlertSuppression`, `updateAlertStatus`,
+  `restoreAgentPurpose`, `seed*`, `backfill*`, `runIngestion`, generic `data_*`).
+- Added read-only boundary constraints to `reliability-incident-triage`.
+- Enforced human-in-the-loop workflow: policy adjustments and remediation actions
+  must be framed as recommendations in `writeInvestigationReport` for verified
+  administrators to review and apply via the UI.
+
 ## 0.5.1 — client-side structure-not-payload guardrails (SRE-04)
 
 - Strengthened `sre-overview` with explicit client-side ingestion sanitization:

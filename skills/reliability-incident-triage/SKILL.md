@@ -63,3 +63,4 @@ recommended action**, then file a report. Reason from **structure, not payload**
   fleet-scale signal single-trace tools miss.
 - Stay in **structure**: you do not need raw prompts/outputs to place a reliability
   root cause. If a step seems to require them, say so rather than assuming content.
+- **Read-only boundary:** Incident triage is strictly observational. Do not attempt mutations or call administrative tools (`updateGovernancePolicyAction`, `setAlertSuppression`, `updateAlertStatus`, `restoreAgentPurpose`). Frame all remediation actions as recommendations in the final investigation report.
