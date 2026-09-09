@@ -49,18 +49,35 @@ claude plugin marketplace add trillo/sre-claude-plugin
 claude plugin install sre
 ```
 
-Then authenticate (one time per machine):
+**Point the plugin at your observability app.** Set `SRE_APP_NAME` to the name of
+the Trillo Observability app you want to inspect — names differ per customer /
+version. This selects which app's login you're sent to, and the issued token is
+scoped to that app. You never supply an appId; logging in through the app
+determines it.
+
+```bash
+export SRE_APP_NAME="Neoclouds_Observability"   # your app's name
+```
+
+Then authenticate (one time per machine, and again whenever you switch apps):
 
 1. Run `/mcp`, select **sre**, choose **authenticate**.
-2. A browser opens Trillo AOS login. Sign in (and pick the right
-   workspace/tenant if prompted).
+2. A browser opens **your app's** Trillo AOS login (resolved from `SRE_APP_NAME`).
+   Sign in through it (pick the right tenant if prompted) — logging in through the
+   app is what scopes your session to it.
 3. Claude Code stores the tokens; the **sre** connection flips to authenticated.
+   On connect the server confirms the app: `Connected to Trillo AOS (appId: N,
+   schema: schemaN)`.
 
 There's no token file to manage. If a tool ever returns "unauthorized", re-run
 `/mcp` → **sre** → authenticate.
 
-> **Endpoint override:** set `SRE_MCP_URL` if your Trillo Observability runs at a non-default URL
-> (self-hosted / regional). Otherwise the default in `.mcp.json` is used.
+> **Requires Claude Code v2.1.220+** — earlier versions don't forward the OAuth
+> `scope` that carries `SRE_APP_NAME`, so the target app can't be selected.
+
+> **Endpoint override:** set `SRE_MCP_URL` if your Trillo Observability runs at a
+> non-default URL (self-hosted / regional). Otherwise the default in `.mcp.json`
+> is used.
 
 ## 5. Your first investigation
 
@@ -122,7 +139,9 @@ author, so the team can see where it came from.
 ## 8. Troubleshooting
 
 - **"unauthorized"** → `/mcp` → **sre** → authenticate again.
-- **`invalid_client` or OAuth login fails** → Confirm `SRE_MCP_URL` points to the intended server (`echo $SRE_MCP_URL`). Ensure `sre-claude-code` and the `Agent_Observability` app are deployed on that server.
+- **`invalid_client` or OAuth login fails** → Confirm `SRE_MCP_URL` points to the intended server (`echo $SRE_MCP_URL`), and that the `sre-claude-code` client is registered there.
+- **Connected to the wrong app / data looks empty or unfamiliar** → the SRE token targets the app named by `SRE_APP_NAME`, which decides both the login you're sent to and the app the token is scoped to. At connect time the server reports it — `Connected to Trillo AOS (appId: N, schema: schemaN)` — and the context/whoami tool returns `appId` + `schema`. If it's wrong: check `echo $SRE_APP_NAME`, fix it, then re-authenticate (`/mcp` → **sre** → authenticate).
+- **Sent to a generic login / not your app's login** → `SRE_APP_NAME` is unset or misspelled (it must match the app's name exactly), or you're on Claude Code older than v2.1.220 (which doesn't forward the scope that carries it).
 - **"No tools available" / empty `list_functions`** → Confirm the target environment has exposed the curated investigation tools to your client profile.
 - **"that tool isn't available"** for a cost/latency deep-dive or drift → the underlying platform function isn't exposed to the copilot yet.
   That's an **admin/app-team** step (see the appendix); the runbook will fall back
