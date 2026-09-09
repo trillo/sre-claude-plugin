@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.5.3 — per-connection app selection via OAuth scope
+
+- `.mcp.json` now carries the target observability app as `scope: app:${SRE_APP_NAME}`.
+  Set `SRE_APP_NAME` to your app's name; `/authorize` routes the login to that app and
+  the issued token is scoped to it (appId from the login, not a fixed client binding).
+- Version bump so the scope line reaches installs cached at the earlier 0.5.2
+  (the scope was added without a version change; this makes it a clean release).
+- Requires Claude Code v2.1.220+ (older versions don't forward the OAuth scope).
+
 ## 0.5.2 — client-side authorization & read-only boundaries (SRE-15 / SRE-03)
 
 - Added explicit operational boundaries to `sre-overview`: SRE Copilot operates

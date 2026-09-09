@@ -9,7 +9,7 @@
       "name": "sre",
       "source": "./",
       "description": "SRE investigation copilot for Trillo Observability over the Trillo AOS MCP server (OAuth login).",
-      "version": "0.5.2"
+      "version": "0.5.3"
     }
   ]
 }
