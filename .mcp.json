@@ -4,9 +4,8 @@
       "type": "http",
       "url": "${SRE_MCP_URL:-https://aos.trillo.ai/api/v2.0/mcp}",
       "oauth": {
-        "clientId": "sre-claude-code",
-        "callbackPort": 8090,
-        "scope": "app:${SRE_APP_NAME}"
+        "clientId": "sre-claude-code-${SRE_APP_NAME}",
+        "callbackPort": 8090
       }
     }
   }
