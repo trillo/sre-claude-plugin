@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.5.4 — app selection via client_id suffix (replaces OAuth scope)
+
+- The target app now rides the **`client_id`**: `sre-claude-code-${SRE_APP_NAME}`.
+  Set `SRE_APP_NAME` as before; the server parses the app from the client_id suffix
+  and routes the login to it. This replaces the 0.5.3 `scope: app:…` approach, which
+  Claude Code dropped (it validates/replaces the configured scope against the
+  server's advertised `scopes_supported`, so the `app:` token never reached
+  `/authorize`). `client_id` is always sent, so it's reliable. No client secret
+  (public/loopback + PKCE). Authoring plugin (`trillo-claude-code`) is unaffected.
+
 ## 0.5.3 — per-connection app selection via OAuth scope
 
 - `.mcp.json` now carries the target observability app as `scope: app:${SRE_APP_NAME}`.
