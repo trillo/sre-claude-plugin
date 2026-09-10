@@ -54,17 +54,36 @@ independently.
 
 ## Install
 
+Install the plugin (runbooks/skills), then register the `sre` MCP server for your
+observability app — the app rides the OAuth **client id** (`sre-claude-code-<appName>`),
+registered via the CLI so your shell fills in the name:
+
 ```bash
 claude plugin marketplace add trillo/sre-claude-plugin
 claude plugin install sre
+
+export SRE_APP_NAME="Neoclouds_Observability"                 # your app's name
+export SRE_MCP_URL="https://aos.trillo.ai/api/v2.0/mcp"       # or your deployment's URL
+claude mcp add --transport http \
+  --client-id "sre-claude-code-$SRE_APP_NAME" \
+  --callback-port 8090 \
+  sre "$SRE_MCP_URL"
 ```
 
 Then authenticate: `/mcp` → **sre** → authenticate.
 
+**Why the CLI and not the plugin's `.mcp.json`:** Claude Code does not expand
+`${VAR}` inside the `oauth` block of `.mcp.json`, so the target app can't be set by
+an env var there. Registering via the CLI lets your shell expand it into a literal
+client id (a public identifier, not a secret). See the
+[User Guide](docs/user-guide.md) §4.
+
 ## Configuration
 
-- `SRE_MCP_URL` — override the Trillo AOS MCP endpoint (defaults to the hosted
-  URL in `.mcp.json`).
+- `SRE_APP_NAME` — the Trillo Observability app to inspect; forms the client id
+  `sre-claude-code-$SRE_APP_NAME` (app names differ per customer/version).
+- `SRE_MCP_URL` — the Trillo AOS MCP endpoint (e.g. `https://aos.trillo.ai/api/v2.0/mcp`,
+  or your dev / self-hosted URL).
 
 ## Status
 

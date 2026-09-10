@@ -1,6 +1,6 @@
 {
   "name": "sre",
-  "version": "0.5.4",
+  "version": "0.6.0",
   "description": "Investigate a Trillo Observability deployment from Claude Code: OAuth login to Trillo AOS, then triage reliability/latency/cost/governance incidents with the platform's investigation tools and runbooks, and file an investigation report back into the Trillo Observability UI.",
   "author": {
     "name": "Trillo Inc",

@@ -44,40 +44,50 @@ time — and you'd rather stay in your terminal than context-switch to the conso
 
 ## 4. Install & connect
 
+Install the plugin (it ships the runbooks/skills):
+
 ```bash
 claude plugin marketplace add trillo/sre-claude-plugin
 claude plugin install sre
 ```
 
-**Point the plugin at your observability app.** Set `SRE_APP_NAME` to the name of
-the Trillo Observability app you want to inspect — names differ per customer /
-version. This selects which app's login you're sent to, and the issued token is
-scoped to that app. You never supply an appId; logging in through the app
-determines it.
+**Register the `sre` MCP server for your observability app.** Apps have different
+names per customer/version, so you name yours. The app rides the OAuth **client
+id** — `sre-claude-code-<appName>` — which you register with the CLI so your shell
+fills in the name:
 
 ```bash
-export SRE_APP_NAME="Neoclouds_Observability"   # your app's name
+export SRE_APP_NAME="Neoclouds_Observability"                 # your app's name
+export SRE_MCP_URL="https://aos.trillo.ai/api/v2.0/mcp"       # or your deployment's URL
+claude mcp add --transport http \
+  --client-id "sre-claude-code-$SRE_APP_NAME" \
+  --callback-port 8090 \
+  sre "$SRE_MCP_URL"
 ```
 
-Then authenticate (one time per machine, and again whenever you switch apps):
+> **Why the CLI, not a config file:** Claude Code does not expand `${VAR}` inside
+> the `oauth` block of `.mcp.json`, so the app can't be set by an env var there.
+> The CLI lets your shell expand it into a literal client id — which is a public
+> identifier, not a secret, so committing/registering it is fine.
+
+Then authenticate:
 
 1. Run `/mcp`, select **sre**, choose **authenticate**.
-2. A browser opens **your app's** Trillo AOS login (resolved from `SRE_APP_NAME`).
-   Sign in through it (pick the right tenant if prompted) — logging in through the
-   app is what scopes your session to it.
-3. Claude Code stores the tokens; the **sre** connection flips to authenticated.
-   On connect the server confirms the app: `Connected to Trillo AOS (appId: N,
-   schema: schemaN)`.
+2. A browser opens **your app's** Trillo AOS login — the server routes it there
+   from your client id. Sign in (pick the tenant if prompted); logging in through
+   the app is what scopes your token to it.
+3. The **sre** connection flips to authenticated. On connect the server confirms
+   the app: `Connected to Trillo AOS (appId: N, schema: schemaN)`.
 
-There's no token file to manage. If a tool ever returns "unauthorized", re-run
-`/mcp` → **sre** → authenticate.
+If a tool ever returns "unauthorized", re-run `/mcp` → **sre** → authenticate.
 
-> **Requires Claude Code v2.1.220+** — earlier versions don't forward the OAuth
-> `scope` that carries `SRE_APP_NAME`, so the target app can't be selected.
+**To target a different app**, re-register with the new name and re-authenticate:
 
-> **Endpoint override:** set `SRE_MCP_URL` if your Trillo Observability runs at a
-> non-default URL (self-hosted / regional). Otherwise the default in `.mcp.json`
-> is used.
+```bash
+claude mcp remove sre
+claude mcp add --transport http --client-id "sre-claude-code-<OtherApp>" \
+  --callback-port 8090 sre "$SRE_MCP_URL"
+```
 
 ## 5. Your first investigation
 
@@ -139,9 +149,11 @@ author, so the team can see where it came from.
 ## 8. Troubleshooting
 
 - **"unauthorized"** → `/mcp` → **sre** → authenticate again.
-- **`invalid_client` or OAuth login fails** → Confirm `SRE_MCP_URL` points to the intended server (`echo $SRE_MCP_URL`), and that the `sre-claude-code` client is registered there.
-- **Connected to the wrong app / data looks empty or unfamiliar** → the SRE token targets the app named by `SRE_APP_NAME`, which decides both the login you're sent to and the app the token is scoped to. At connect time the server reports it — `Connected to Trillo AOS (appId: N, schema: schemaN)` — and the context/whoami tool returns `appId` + `schema`. If it's wrong: check `echo $SRE_APP_NAME`, fix it, then re-authenticate (`/mcp` → **sre** → authenticate).
-- **Sent to a generic login / not your app's login** → `SRE_APP_NAME` is unset or misspelled (it must match the app's name exactly), or you're on Claude Code older than v2.1.220 (which doesn't forward the scope that carries it).
+- **`invalid_client` or OAuth login fails** → the `sre` server's client id isn't registered on that deployment. It must be `sre-claude-code-<appName>` for an app deployed there. Check what you registered: `claude mcp get sre` (look at the client id); re-register if wrong.
+- **Connected to the wrong app / data looks empty or unfamiliar** → the token targets the app in your client id (`sre-claude-code-<appName>`). At connect time the server reports it — `Connected to Trillo AOS (appId: N, schema: schemaN)` — and the context/whoami tool returns `appId` + `schema`. If it's wrong, re-register with the right name (`claude mcp remove sre` then `claude mcp add … --client-id "sre-claude-code-<App>" …`) and re-authenticate.
+- **Sent to a generic login / not your app's login** → your client id is the bare `sre-claude-code` (no app suffix) or the app name is misspelled — it must match the app's name exactly, and that app must be deployed on the server `SRE_MCP_URL` points to.
+- **The authorize URL shows a random/UUID client id** → the CLI wrote the client id in a form the OAuth layer didn't pick up (a known `claude mcp add` edge case) and fell back to dynamic registration. Work around it by hardcoding the server in a project `.mcp.json` with `"clientId": "sre-claude-code-<App>"` instead.
+- **Config change seems ignored (still the old app/client id)** → Claude Code caches the OAuth registration per server in the Keychain and reuses it. Remove and re-add the server (`claude mcp remove sre` / `claude mcp add …`), then re-authenticate; if it persists, clear the `sre` entry from the `Claude Code-credentials` Keychain item.
 - **"No tools available" / empty `list_functions`** → Confirm the target environment has exposed the curated investigation tools to your client profile.
 - **"that tool isn't available"** for a cost/latency deep-dive or drift → the underlying platform function isn't exposed to the copilot yet.
   That's an **admin/app-team** step (see the appendix); the runbook will fall back

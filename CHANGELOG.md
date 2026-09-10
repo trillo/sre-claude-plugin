@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.6.0 — app selection via `claude mcp add` client id (skills-only plugin)
+
+- **Breaking (setup):** the plugin no longer ships an `.mcp.json` server. Claude Code
+  doesn't expand `${VAR}` in the `oauth` block, so the app can't be parameterized in
+  a config file. Register the `sre` server yourself so the shell expands the app into
+  the client id:
+  ```
+  claude mcp add --transport http --client-id "sre-claude-code-$SRE_APP_NAME" \
+    --callback-port 8090 sre "$SRE_MCP_URL"
+  ```
+  The server parses the app off the `sre-claude-code-<appName>` client id and routes
+  the login there; the token's appId comes from that login. Client ids are public
+  identifiers, not secrets.
+- Removes the 0.5.x scope / `${SRE_CLIENT_ID}` approaches, which Claude Code drops or
+  doesn't interpolate.
+- Docs (README + user-guide) rewritten to the `claude mcp add` flow, app switching,
+  and the Keychain-cache caveat.
+
+
 ## 0.5.4 — app selection via client_id suffix (replaces OAuth scope)
 
 - The target app now rides the **`client_id`**: `sre-claude-code-${SRE_APP_NAME}`.
